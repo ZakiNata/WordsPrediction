@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,22 +10,22 @@ using System.Windows.Forms;
 
 namespace WordsPrediction
 {
-    public partial class Form1 : Form
+    public partial class Form2 : Form
     {
-        public Form1()
+        public Form2()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Cancel_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void AddButton_Click(object sender, EventArgs e)
         {
-            Form2 f2 = new Form2();
-            f2.ShowDialog();
+            string text = this.textBox1.Text;
+            bool added = WordsPrediction.Program.addToTheXml(text);
         }
     }
 }
