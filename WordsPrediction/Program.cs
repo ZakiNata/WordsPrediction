@@ -43,6 +43,12 @@ namespace WordsPrediction
                 addWordToXml(words[i], words[i + 1]);
             }
 
+            string xmlString = XmlConvert.SerializeObject(xml);
+
+            using (StreamWriter outputFile = new StreamWriter(path))
+            {
+                outputFile.WriteLine(xmlString);
+            }
             return true;
         }
 
@@ -54,7 +60,25 @@ namespace WordsPrediction
             }
             else
             {
+                addNewWord(v1, v2);
+            }
+        }
 
+        private static void addNewWord(string v1, string v2)
+        {
+            xmlStruct.wordTag.WordProp wp = new xmlStruct.wordTag.WordProp(v2, 1);
+            xmlStruct.wordTag wt = new xmlStruct.wordTag();
+            wt.word = v1;
+            xmlStruct.wordTag.WordProp[] temp = { wp };
+            wt.wp = temp;
+            if (xml.words != null)
+            {
+                xml.words.Concat(Enumerable.Repeat(wt, 1)).ToArray();
+            }
+            else
+            {
+                xmlStruct.wordTag[] temp2 = { wt };
+                xml.words = temp2;
             }
         }
 
@@ -95,6 +119,8 @@ namespace WordsPrediction
 
         private static bool wordExistsInXml(string v1)
         {
+            if (xml.words == null)
+                return false;
             foreach(WordsPrediction.xmlStruct.wordTag word in xml.words)
             {
                 if(word.word.Equals(v1))
