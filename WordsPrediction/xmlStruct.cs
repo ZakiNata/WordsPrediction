@@ -1,4 +1,7 @@
-﻿namespace WordsPrediction
+﻿using System;
+using System.Linq;
+
+namespace WordsPrediction
 {
     public class xmlStruct
     {
@@ -19,6 +22,11 @@
                 {
                     rWord = w;
                     count = c;
+                }
+
+                internal static void addWordProp(WordProp[] wp, WordProp temp)
+                {
+                    wp.Concat(Enumerable.Repeat(temp, 1)).ToArray();
                 }
             }
         }

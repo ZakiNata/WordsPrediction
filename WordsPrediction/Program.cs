@@ -16,17 +16,6 @@ namespace WordsPrediction
         [STAThread]
         static void Main()
         {
-            string path = "./xmlStruct.xml";
-            try
-            {
-                string text = System.IO.File.ReadAllText(path);
-                xml = XmlConvert.DeserializeObject<xmlStruct>(text);
-            }
-            catch (System.IO.FileNotFoundException)
-            {
-                FileStream fs = File.Create(path);
-            }
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
@@ -34,6 +23,17 @@ namespace WordsPrediction
 
         internal static bool addToTheXml(string text)
         {
+            string path = "./xmlStruct.xml";
+            try
+            {
+                string Filetext = System.IO.File.ReadAllText(path);
+                xml = XmlConvert.DeserializeObject<xmlStruct>(Filetext);
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                FileStream fs = File.Create(path);
+            }
+
             char[] delimiterChars = { ' ', ',', '.', ':', '\t' };
 
             string[] words = text.Split(delimiterChars);
@@ -50,7 +50,7 @@ namespace WordsPrediction
         {
             if(wordExistsInXml(v1))
             {
-
+                addRelatedWord(v1, v2);
             }
             else
             {
@@ -58,9 +58,51 @@ namespace WordsPrediction
             }
         }
 
+        private static void addRelatedWord(string v1, string v2)
+        {
+            foreach (WordsPrediction.xmlStruct.wordTag word in xml.words)
+            {
+                if (word.word.Equals(v1))
+                {
+                    foreach (WordsPrediction.xmlStruct.wordTag.WordProp prop in word.wp)
+                    {
+                        if (prop.rWord.Equals(v2))
+                            prop.count = prop.count + 1;
+                    }
+                    WordsPrediction.xmlStruct.wordTag.WordProp temp = new xmlStruct.wordTag.WordProp(v2, 1);
+                    xmlStruct.wordTag.WordProp.addWordProp(word.wp,temp);
+
+                }
+            }
+        }
+
+        //private static bool wordExistsInXmlRelated(string v1, string v2)
+        //{
+        //    foreach (WordsPrediction.xmlStruct.wordTag word in xml.words)
+        //    {
+        //        if (word.word.Equals(v1))
+        //        {
+        //            foreach(WordsPrediction.xmlStruct.wordTag.WordProp prop in word.wp)
+        //            {
+        //                if (prop.rWord.Equals(v2))
+        //                    return true;
+        //            }
+        //            return false;
+        //        }
+        //    }
+        //    return false;
+        //}
+
         private static bool wordExistsInXml(string v1)
         {
-            return true;
+            foreach(WordsPrediction.xmlStruct.wordTag word in xml.words)
+            {
+                if(word.word.Equals(v1))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
