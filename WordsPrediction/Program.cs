@@ -34,9 +34,12 @@ namespace WordsPrediction
                 FileStream fs = File.Create(path);
             }
 
-            char[] delimiterChars = { ' ', ',', '.', ':', '\t' };
+            char[] delimiterChars = { ' ', ',', '.', ':', '\t','\n','\r'};
 
             string[] words = text.Split(delimiterChars);
+
+            string ElementToRemove = "";
+            words = words.Where(val => val != ElementToRemove).ToArray();
 
             for (int i=0;i<words.Length-1;i++)
             {
@@ -73,7 +76,7 @@ namespace WordsPrediction
             wt.wp = temp;
             if (xml.words != null)
             {
-                xml.words.Concat(Enumerable.Repeat(wt, 1)).ToArray();
+                xml.words = xml.words.Concat(Enumerable.Repeat(wt, 1)).ToArray();
             }
             else
             {

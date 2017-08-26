@@ -26,7 +26,7 @@ namespace WordsPrediction
 
                 internal static void addWordProp(WordProp[] wp, WordProp temp)
                 {
-                    wp.Concat(Enumerable.Repeat(temp, 1)).ToArray();
+                    wp = wp.Concat(Enumerable.Repeat(temp, 1)).ToArray();
                 }
             }
         }
