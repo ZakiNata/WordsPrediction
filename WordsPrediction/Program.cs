@@ -94,10 +94,14 @@ namespace WordsPrediction
                     foreach (WordsPrediction.xmlStruct.wordTag.WordProp prop in word.wp)
                     {
                         if (prop.rWord.Equals(v2))
+                        {
                             prop.count = prop.count + 1;
+                            return;
+                        }
                     }
                     WordsPrediction.xmlStruct.wordTag.WordProp temp = new xmlStruct.wordTag.WordProp(v2, 1);
-                    xmlStruct.wordTag.WordProp.addWordProp(word.wp,temp);
+                    word.wp = word.wp.Concat(Enumerable.Repeat(temp, 1)).ToArray();
+                    //xmlStruct.wordTag.WordProp.addWordProp(word.wp,temp);
 
                 }
             }
