@@ -21,6 +21,13 @@ namespace WordsPrediction
         private void button1_Click(object sender, EventArgs e)
         {
             string text = textBox1.Text;
+
+            if (text == "")
+            {
+                textBox2.Text = "No Suggestions found";
+                return;
+            }
+
             char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\n', '\r' };
             string[] words = text.Split(delimiterChars);
             string ElementToRemove = "";
