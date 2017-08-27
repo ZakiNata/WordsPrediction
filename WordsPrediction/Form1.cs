@@ -63,9 +63,12 @@ namespace WordsPrediction
         {
             string result = "";
             //MyClass[] sorted = myClassArray.OrderBy(c => c.Name).ToArray();
-            xmlStruct.wordTag.WordProp[] wpSorted = wp.OrderBy(w => w.count).ToArray();
-            
-            foreach(xmlStruct.wordTag.WordProp wps in wpSorted)
+
+            //xmlStruct.wordTag.WordProp[] wpSorted = wp.OrderBy(w => w.count).ToArray();
+
+            wp = wp.OrderByDescending(w => w.count).ToArray();
+
+            foreach (xmlStruct.wordTag.WordProp wps in wp)
             {
                 result += wps.rWord + Environment.NewLine;
             }
