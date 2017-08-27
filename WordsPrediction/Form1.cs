@@ -16,6 +16,15 @@ namespace WordsPrediction
         public Form1()
         {
             InitializeComponent();
+            string path = "./xmlStruct.xml";
+            try
+            {
+                string Filetext = System.IO.File.ReadAllText(path);
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                FileStream fs = File.Create(path);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
